@@ -3,13 +3,15 @@ package com.gtiinfo.ecreditproject.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
 @Data
-public class Demande {
+public class Demande implements Serializable {
 
     @Id
     @SequenceGenerator(name = "demande_seq", sequenceName = "DEMANDE_SEQ", allocationSize = 1)
@@ -17,19 +19,19 @@ public class Demande {
     private Long id;
     private String nom;
     private String prenom;
-    private String TypePieceIdentite;
-    private String NumPieceIdentité;
+    private String typePieceIdentite;
+    private String numPieceIdentite;
     private String numCompte;
     private String GSM;
     private LocalDateTime dateCompte;
     private LocalDateTime dateNaissance;
-    private String TypeCredit;
+    private String typeCredit;
     private int montant;
     private int nbreEcheance;
 
-    @OneToMany(mappedBy = "demande")
-    private List<PieceJointe> pieceJointes;
-
+    @OneToMany(mappedBy = "demande", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<PieceJointe> pieceJointes;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -38,9 +40,12 @@ public class Demande {
 
 
 
-    @OneToOne(mappedBy = "demande", cascade = CascadeType.ALL)
-    private Garentie garentie;
+    @OneToMany(mappedBy = "demande", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<Garentie> garenties;
 
-    @OneToOne(mappedBy = "demande", cascade = CascadeType.ALL)
+
+    @OneToOne(mappedBy = "demande", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
     private EtatDemande etatDemande;
 }

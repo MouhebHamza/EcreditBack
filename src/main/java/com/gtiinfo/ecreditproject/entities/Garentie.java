@@ -2,9 +2,11 @@ package com.gtiinfo.ecreditproject.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Entity
 @Data
-public class Garentie {
+public class Garentie implements Serializable {
     @Id
     @SequenceGenerator(name = "garentie_seq", sequenceName = "GARENTIE_SEQ", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "garentie_seq")
@@ -13,7 +15,7 @@ public class Garentie {
     private String typeGarentie;
     private int montantGarentie;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "demande_id")
     private Demande demande;
 }

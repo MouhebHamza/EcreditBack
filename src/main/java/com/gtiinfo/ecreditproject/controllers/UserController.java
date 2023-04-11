@@ -23,7 +23,6 @@ public class UserController {
     private UserRepository userRepository;
 
     @GetMapping("")
-    @Secured("ADMIN")
     public List<User> getUsers() {
         return userRepository.findAll();
     }

@@ -19,13 +19,11 @@ public class DemandeController {
     private DemandeRepository demandeRepository;
 
     @GetMapping("/")
-    @Secured("ADMIN")
     public List<Demande> getAllDemandes() {
         return demandeRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    @Secured("ADMIN")
     public ResponseEntity<Demande> getDemandeById(@PathVariable Long id) {
         Optional<Demande> demande = demandeRepository.findById(id);
         return demande.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
@@ -33,14 +31,12 @@ public class DemandeController {
     }
 
     @PostMapping("/")
-    @Secured("ADMIN")
     public ResponseEntity<Demande> createDemande(@RequestBody Demande demande) {
         Demande savedDemande = demandeRepository.save(demande);
         return new ResponseEntity<>(savedDemande, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    @Secured("ADMIN")
     public ResponseEntity<Demande> updateDemande(@PathVariable Long id, @RequestBody Demande demande) {
         Optional<Demande> optionalDemande = demandeRepository.findById(id);
         if (optionalDemande.isPresent()) {
@@ -53,7 +49,6 @@ public class DemandeController {
     }
 
     @DeleteMapping("/{id}")
-    @Secured("ADMIN")
     public ResponseEntity<HttpStatus> deleteDemande(@PathVariable Long id) {
         Optional<Demande> optionalDemande = demandeRepository.findById(id);
         if (optionalDemande.isPresent()) {

@@ -6,11 +6,19 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/garenties")
 @RequiredArgsConstructor
 public class GarentieController {
     private final GarentieRepository garentieRepository;
+
+    @GetMapping("/")
+    public List<Garentie> getAllDemandes() {
+        return garentieRepository.findAll();
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Garentie> getGarentieById(@PathVariable Long id) {
@@ -21,7 +29,7 @@ public class GarentieController {
         return ResponseEntity.ok(garentie);
     }
 
-    @PostMapping
+    @PostMapping("/")
     public Garentie createGarentie(@RequestBody  Garentie garentie) {
         return garentieRepository.save(garentie);
     }
