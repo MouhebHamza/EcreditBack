@@ -2,15 +2,21 @@ package com.gtiinfo.ecreditproject.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 
 @Entity
+@Getter
+@Setter
 @Data
+@Table(name = "demandes")
 public class Demande implements Serializable {
 
     @Id
@@ -31,21 +37,25 @@ public class Demande implements Serializable {
 
     @OneToMany(mappedBy = "demande", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
-    private Set<PieceJointe> pieceJointes;
+    private Set<PieceJointe> pieceJointes= new HashSet<>();
 
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "simulation_id")
+    private Simulation simulation;
 
 
     @OneToMany(mappedBy = "demande", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
-    private Set<Garentie> garenties;
+    private Set<Garentie> garenties= new HashSet<>();
 
 
-    @OneToOne(mappedBy = "demande", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "demande", cascade  = CascadeType.PERSIST
+
+    )
     private EtatDemande etatDemande;
 }

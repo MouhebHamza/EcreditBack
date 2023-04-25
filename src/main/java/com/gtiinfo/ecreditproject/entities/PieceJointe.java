@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 @Entity
 @Data
+@Table(name = "pieces_jointes")
 public class PieceJointe implements Serializable {
     @Id
     @SequenceGenerator(name = "piece_jointe_seq", sequenceName = "PIECE_JOINTE_SEQ", allocationSize = 1)

@@ -2,6 +2,7 @@ package com.gtiinfo.ecreditproject.services;
 
 import com.gtiinfo.ecreditproject.Repositories.DemandeRepository;
 import com.gtiinfo.ecreditproject.entities.Demande;
+import com.gtiinfo.ecreditproject.entities.EtatDemande;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +26,9 @@ public class DemandeServiceImpl implements DemandeService {
     public Optional<Demande> findById(Long id) {
         return repository.findById(id);
     }
+
+
+
 
     @Override
     public List<Demande> findAll() {

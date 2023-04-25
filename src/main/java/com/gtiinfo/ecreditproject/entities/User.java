@@ -1,10 +1,13 @@
 package com.gtiinfo.ecreditproject.entities;
 
+import com.gtiinfo.ecreditproject.services.DemandeService;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.*;
-
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,15 +27,27 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
     @SequenceGenerator(name = "user_seq", sequenceName = "user_seq", allocationSize = 1)
     private Long id;
+
+    @NotBlank
+    @NotNull
+    @Email(message = "Email should be valid", regexp = "^[\\w.\\.]+@([\\w.]+\\.)+[\\w.]{2,4}$")
+    @Column(unique = true)
     private String email;
     private String password;
+
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
     @Column(name = "nom")
 
+    @NotBlank
+    @NotNull
     private String firstname;
-    @Column(name = "prenom")
+
+    @Column(name = "prenom",unique = true)
+    @NotBlank
+    @NotNull
 
     private String lastname;
 
@@ -66,12 +81,14 @@ public class User implements UserDetails {
     }
 
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<Demande> demandes = new HashSet<>();
 
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
-    private Set<Demande> demandes;
-
+    private Set<Simulation> simulations = new HashSet<>();;
 
 
 

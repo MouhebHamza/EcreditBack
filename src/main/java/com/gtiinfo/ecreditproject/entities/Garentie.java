@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 @Entity
 @Data
+@Table(name = "garenties")
 public class Garentie implements Serializable {
     @Id
     @SequenceGenerator(name = "garentie_seq", sequenceName = "GARENTIE_SEQ", allocationSize = 1)
