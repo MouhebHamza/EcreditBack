@@ -20,11 +20,9 @@ public class EtatDemandeController {
     @Autowired
     private EtatDemandeRepository etatDemandeRepository;
     @Autowired
-
     private DemandeService demandeService;
 
     @Autowired
-
     private EtatDemandeService etatDemandeService;
 
     @GetMapping("/")
@@ -43,12 +41,10 @@ public class EtatDemandeController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
     @PostMapping("/")
     public ResponseEntity<EtatDemande> createEtatDemande(@RequestBody EtatDemande etatDemande) {
         // Get the Demande associated with the EtatDemande
         Demande demande = etatDemande.getDemande();
-
             // Set the Demande object in the EtatDemande object
             etatDemande.setDemande(demande);
             // Save the EtatDemande object in the database
@@ -56,6 +52,4 @@ public class EtatDemandeController {
             return new ResponseEntity<>(etatDemande, HttpStatus.CREATED);
 
     }
-
-
 }

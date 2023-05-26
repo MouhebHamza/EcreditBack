@@ -35,7 +35,6 @@ public class User implements UserDetails {
     private String email;
     private String password;
 
-
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -81,6 +80,7 @@ public class User implements UserDetails {
     }
 
 
+
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private Set<Demande> demandes = new HashSet<>();
@@ -89,6 +89,12 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private Set<Simulation> simulations = new HashSet<>();;
+
+//    @OneToMany(mappedBy = "user")
+//    private List<RendezVous> rdv;
+//
+//    @OneToMany(mappedBy = "user")
+//    private List<Notification> notifications;
 
 
 

@@ -37,8 +37,6 @@ public class SimulationController {
         Simulation simulation = simulationRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Simulation not found with id: " + id));
 
-
-
         Simulation updatedSimulation = simulationRepository.save(simulation);
         return updatedSimulation;
     }
@@ -49,3 +47,4 @@ public class SimulationController {
         return "Simulation deleted successfully with id: " + id;
     }
 }
+

@@ -4,6 +4,8 @@ import com.gtiinfo.ecreditproject.entities.Garentie;
 import com.gtiinfo.ecreditproject.Repositories.GarentieRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,7 +35,6 @@ public class GarentieController {
     public Garentie createGarentie(@RequestBody  Garentie garentie) {
         return garentieRepository.save(garentie);
     }
-
     @PutMapping("/{id}")
     public ResponseEntity<Garentie> updateGarentie(@PathVariable Long id, @RequestBody  Garentie updatedGarentie) {
         Garentie existingGarentie = garentieRepository.findById(id).orElse(null);

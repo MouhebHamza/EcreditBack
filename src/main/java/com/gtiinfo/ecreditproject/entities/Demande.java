@@ -41,7 +41,8 @@ public class Demande implements Serializable {
 
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id",referencedColumnName = "id")
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)

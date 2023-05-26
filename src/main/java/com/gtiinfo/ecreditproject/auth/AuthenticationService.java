@@ -2,6 +2,7 @@ package com.gtiinfo.ecreditproject.auth;
 
 
 import com.gtiinfo.ecreditproject.config.JwtService;
+import com.gtiinfo.ecreditproject.dto.UserDTO;
 import com.gtiinfo.ecreditproject.token.Token;
 import com.gtiinfo.ecreditproject.token.TokenRepository;
 import com.gtiinfo.ecreditproject.token.TokenType;
@@ -13,6 +14,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @Service
 @RequiredArgsConstructor
@@ -38,7 +42,6 @@ public class AuthenticationService {
                 .token(jwtToken)
                 .build();
     }
-
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -76,5 +79,15 @@ public class AuthenticationService {
             token.setRevoked(true);
         });
         tokenRepository.saveAll(validUserTokens);
+    }
+
+    public UserDTO getUser() {
+        UserDTO userDtoPrincipal = null;
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        Object principal = securityContext.getAuthentication().getPrincipal();
+        if (principal instanceof UserDTO) {
+            userDtoPrincipal = ((UserDTO) principal);
+        }
+        return userDtoPrincipal;
     }
 }
